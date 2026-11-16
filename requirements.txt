@@ -1,2 +1,5 @@
 rawpy
 tqdm
+requests
+python-dotenv
+Pillow

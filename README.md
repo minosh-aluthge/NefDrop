@@ -6,6 +6,29 @@ Install Python dependencies:
 python -m pip install -r requirements.txt
 ```
 
+To upload converted JXL files to Discord for the first time, pass the webhook
+URL with `-u`. This creates or updates `.env` automatically:
+
+```powershell
+python main.py "D:\Photos" -u "https://discord.com/api/webhooks/WEBHOOK_ID/WEBHOOK_TOKEN"
+```
+
+After that, use `-u` without a URL. To switch channels, pass the new webhook
+URL and `.env` will be updated:
+
+```powershell
+python main.py "D:\Photos" -u
+python main.py "D:\Photos" -u "https://discord.com/api/webhooks/NEW_ID/NEW_TOKEN"
+```
+
+JXL is the default output. Add `-j` to also create a compatible JPEG file;
+uploads with `-u` include any generated JPEG files and are sent in batches of
+10 files:
+
+```powershell
+python main.py "D:\Photos" -j -u
+```
+
 Convert one NEF file. The result is saved to a `jxl` folder beside the input:
 
 ```powershell

@@ -3,7 +3,7 @@ import argparse
 class arg_pass:
     def __init__(self):
         # Create the argument parser
-        custom_usage = "%(prog)s input [output] [-h] [-l] [-c] [-q QUALITY] [-s SIZE_MB] [-e EFFORT]"
+        custom_usage = "%(prog)s input [output] [-h] [-l] [-c] [-q QUALITY] [-s SIZE_MB] [-e EFFORT] [-j] [-u [WEBHOOK_URL]]"
         self.parser = argparse.ArgumentParser(description="Convert a nef file to jxl format.", usage=custom_usage)
         self.parser.add_argument("input_file", metavar="input", type=str, help="Path to the input nef file.")
         self.parser.add_argument("output_file", metavar="output", type=str, nargs="?", help="Output .jxl file or batch output folder. Defaults to an jxl folder beside the input.")
@@ -15,6 +15,16 @@ class arg_pass:
         self.parser.add_argument("-s", "--size-mb", dest="size_mb", type=float, help="Target an output size in megabytes, for example 10 for about 10 MB per image.")
         
         self.parser.add_argument("-e", "--effort", dest="effort", type=int, default=4, help="Set CPU optimization effort from 1 (fastest conversion) to 9 (best compression, uses more CPU), (default: 4).")
+        self.parser.add_argument("-j", "--jpg", action="store_true", help="Also create a JPEG copy for compatibility.")
+        self.parser.add_argument(
+            "-u",
+            "--upload",
+            nargs="?",
+            const=True,
+            default=False,
+            metavar="WEBHOOK_URL",
+            help="Upload JXL files; optionally save this webhook URL to .env.",
+        )
         
         self.args = self.parser.parse_args()
         if not 1 <= self.args.quality <= 100:

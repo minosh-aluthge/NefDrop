@@ -41,6 +41,7 @@ def convert_batch(nef_files, output_path, args):
                 args.quality,
                 args.effort,
                 args.size_mb,
+                args.jpg,
             ): nef_file
             for nef_file in nef_files
         }
@@ -60,6 +61,11 @@ def main():
         output_path = Path(args.output_file) if args.output_file else input_path / "jxl"
         output_path.mkdir(parents=True, exist_ok=True)
         convert_batch(find_nef_files(input_path, output_path), output_path, args)
+        if args.upload:
+            from src.discord_uploader import upload_jxl_files
+
+            webhook_url = args.upload if isinstance(args.upload, str) else None
+            upload_jxl_files(output_path, webhook_url=webhook_url)
         return
 
     output_path = Path(args.output_file) if args.output_file else input_path.parent / "jxl" / f"{input_path.stem}.jxl"
@@ -73,7 +79,13 @@ def main():
         args.quality,
         args.effort,
         args.size_mb,
+        args.jpg,
     )
+    if args.upload:
+        from src.discord_uploader import upload_jxl_files
+
+        webhook_url = args.upload if isinstance(args.upload, str) else None
+        upload_jxl_files(output_path.parent, webhook_url=webhook_url)
 
 if __name__ == "__main__":
     main()
