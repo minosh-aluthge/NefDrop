@@ -183,3 +183,4 @@ note.txt
 resose_i_use.txt
 *.NEF
 /arm64-windows-static
+/x64-windows-static

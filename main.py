@@ -1,18 +1,12 @@
-import argparse
+from src.arg_pass import arg_pass
+from src.converter import convert_nef_to_jxl
+def main():
+    # Create an instance of the arg_pass class to parse command-line arguments
+    args = arg_pass().args
 
+    # Call the convert function with the parsed arguments
+    convert_nef_to_jxl(args.input_file, args.output_file, args.lossless, args.compression, args.quality, args.effort)
 
-# Create the argument parser
-custom_usage = "%(prog)s input output [-h] [-l] [-c] [-q QUALITY] [-e EFFORT]" 
-parser = argparse.ArgumentParser(description="Convert a nef file to jxl format.", usage=custom_usage)
-parser.add_argument("input_file", metavar="input", type=str, help="Path to the input nef file.")
-parser.add_argument("output_file", metavar="output", type=str, help="Path to the output jxl file.")
-# Create a group where only ONE of these arguments can be selected
-group = parser.add_mutually_exclusive_group()
-group.add_argument("-l", "--lossless", dest="lossless", action="store_true", help="Use lossless compression for the output jxl file.")
-group.add_argument("-c", "--compression", dest="compression",action="store_true", help="Compress the image to save disk space with minimal visible quality loss.")
-group.add_argument("-q", "--quality", dest="quality", type=int, default=90, help="Set compression level from 1 (smallest file size) to 100 (highest quality), (default: 90).")
-
-parser.add_argument("-e", "--effort", dest="effort", type=int, default=4, help="Set CPU optimization effort from 1 (fastest conversion) to 9 (best compression, uses more CPU), (default: 4).")
-
-args = parser.parse_args()
-
+if __name__ == "__main__":
+    main()
+    
