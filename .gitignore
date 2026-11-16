@@ -181,3 +181,5 @@ cython_debug/
 .cursorindexingignore
 note.txt
 resose_i_use.txt
+*.NEF
+/arm64-windows-static
